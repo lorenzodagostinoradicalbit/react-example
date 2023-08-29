@@ -1,10 +1,9 @@
 version: "3"
 services:
   golang-app:
-    image: lorenzodagostinorad/go-example:d691cca4496056dbac935d29e5969a35edcdfc33
+    image: lorenzodagostinorad/go-example:latest
     ports:
       - 8081:3000
-
 
   backend-build:
     build:
@@ -13,7 +12,7 @@ services:
     ports:
       - 3000:80
     environment:
-      - VERSION_API_ENDPOINT=golang-app
-      - VERSION_API_PORT=3000
+      - VERSION_API_ENDPOINT=127.0.0.1
+      - VERSION_API_PORT=8081
     depends_on:
       - golang-app
