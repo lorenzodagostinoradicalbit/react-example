@@ -9,7 +9,19 @@ COPY . .
 RUN npm run build
 
 # Production stage
-FROM nginx:1.25.2-alpine as production-stage
+FROM nginx:alpine
 COPY --from=build-stage /app/build /usr/share/nginx/html
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Copy .env file and shell script to container
+WORKDIR /usr/share/nginx/html
+COPY ./env.sh .
+COPY .env .
+
+# Add bash
+RUN apk add --no-cache bash
+
+# Make our shell script executable
+RUN chmod +x env.sh
+
+# Start Nginx server
+CMD ["/bin/bash", "-c", "./env.sh '.env' ./static/app-config.js && nginx -g \"daemon off;\""]
