@@ -24,3 +24,4 @@ jobs:
       run: |
           docker buildx create --use
           docker buildx build --push --platform linux/amd64 -t ${{secrets.DOCKER_REGISTRY_USER}}/react-example:${{ github.sha }} -t ${{secrets.DOCKER_REGISTRY_USER}}/react-example ./app
+          docker buildx build --push --platform linux/amd64 -t ${{secrets.DOCKER_REGISTRY_USER}}/react-example:${{ github.sha }} -t ${{secrets.DOCKER_REGISTRY_USER}}/next-example ./next-app
